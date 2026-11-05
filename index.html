@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}[hidden]{display:none!important}</style>
+<title>SONS Wichteln</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;800&family=Figtree:wght@400;500;700&display=swap">
+<style>
+  /* Layout: one centered gift tag on a frosted ground; the tag flips from "name check" to "reveal" */
+  :root {
+    --bg: #E9EFEB;
+    --surface: #FBFCFA;
+    --fg: #17271F;
+    --muted: #5B6C63;
+    --line: #C9D5CE;
+    --pine: #1F5A41;
+    --berry: #B4233C;
+    --berry-soft: #F6DDE1;
+    --string: #A7836B;
+    --ok-fg: #FBFCFA;
+    --font-display: "Unbounded", "Arial Black", system-ui, sans-serif;
+    --font-body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0E1914; --surface: #16251E; --fg: #E6EFE9; --muted: #95A99E; --line: #2A3D33;
+      --pine: #6CC79A; --berry: #F0627A; --berry-soft: #3A1C23; --string: #8C6E5A; --ok-fg: #0E1914;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0E1914; --surface: #16251E; --fg: #E6EFE9; --muted: #95A99E; --line: #2A3D33;
+    --pine: #6CC79A; --berry: #F0627A; --berry-soft: #3A1C23; --string: #8C6E5A; --ok-fg: #0E1914;
+    color-scheme: dark;
+  }
+
+  html, body { min-height: 100%; }
+  body {
+    background:
+      radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--fg) 9%, transparent) 1px, transparent 1.5px) 0 0 / 22px 22px,
+      var(--bg);
+    color: var(--fg);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  .page {
+    max-width: 30rem;
+    margin: 0 auto;
+    padding-block: 3rem 4rem;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    display: grid;
+    gap: 2rem;
+  }
+
+  header { display: grid; gap: .35rem; text-align: left; }
+  .brand {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(3.5rem, 18vw, 5.5rem);
+    line-height: .9;
+    letter-spacing: .02em;
+    color: var(--pine);
+    margin: 0;
+  }
+  .brand span { color: var(--berry); }
+  .sub {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: .8rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  /* gift tag */
+  .tag-wrap { position: relative; padding-top: 2.25rem; }
+  .tag-wrap::before { /* string */
+    content: ""; position: absolute; left: 2.6rem; top: 0; width: 2px; height: 2.9rem;
+    background: var(--string); border-radius: 2px;
+  }
+  .tag {
+    position: relative;
+    background: var(--surface);
+    border: 1.5px solid var(--line);
+    border-radius: 6px 22px 22px 22px;
+    padding: 2.25rem 1.5rem 1.75rem;
+    box-shadow: 0 1px 0 var(--line), 0 18px 40px -24px color-mix(in srgb, var(--pine) 45%, transparent);
+    display: grid;
+    gap: 1.25rem;
+  }
+  .tag::before { /* eyelet */
+    content: ""; position: absolute; left: 2.15rem; top: .7rem; width: 1rem; height: 1rem;
+    border-radius: 50%; border: 2px solid var(--line); background: var(--bg);
+  }
+  .eyebrow {
+    font-size: .75rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--berry); margin: 0;
+  }
+  h2 {
+    font-family: var(--font-display); font-weight: 500; font-size: 1.35rem; line-height: 1.25;
+    margin: 0; text-wrap: balance;
+  }
+  p { margin: 0; }
+  .muted { color: var(--muted); }
+
+  form { display: grid; gap: .75rem; }
+  label { font-weight: 700; font-size: .9rem; }
+  input[type="text"] {
+    font: inherit; font-size: 1.1rem;
+    padding: .8rem 1rem;
+    border: 1.5px solid var(--line); border-radius: 12px;
+    background: var(--bg); color: var(--fg);
+    width: 100%; box-sizing: border-box;
+  }
+  input[type="text"]:focus-visible { outline: 3px solid color-mix(in srgb, var(--pine) 40%, transparent); outline-offset: 1px; border-color: var(--pine); }
+  button {
+    font: inherit; font-weight: 700; font-size: 1rem;
+    padding: .85rem 1.2rem; border-radius: 12px; border: 0; cursor: pointer;
+    background: var(--pine); color: var(--ok-fg);
+  }
+  button:hover { filter: brightness(1.08); }
+  button:focus-visible { outline: 3px solid var(--berry); outline-offset: 2px; }
+  button[disabled] { opacity: .6; cursor: progress; }
+  .linkish { background: none; color: var(--muted); padding: .25rem 0; font-weight: 500; text-decoration: underline; text-underline-offset: 3px; justify-self: start; }
+
+  .names { display: flex; flex-wrap: wrap; gap: .4rem; padding: 0; margin: 0; list-style: none; }
+  .names li {
+    font-size: .85rem; padding: .2rem .65rem; border-radius: 999px;
+    border: 1px solid var(--line); color: var(--muted);
+  }
+
+  .error {
+    background: var(--berry-soft); color: var(--fg);
+    border-radius: 10px; padding: .7rem .9rem; font-size: .95rem;
+  }
+
+  .reveal { text-align: center; gap: .9rem; padding-block: 2.75rem 2.25rem; }
+  .reveal .eyebrow { justify-self: center; }
+  .recipient {
+    font-family: var(--font-display); font-weight: 800;
+    font-size: clamp(2.4rem, 13vw, 3.6rem); line-height: 1; color: var(--berry);
+    margin: .25rem 0; overflow-wrap: anywhere;
+  }
+  .reveal.anim .recipient { animation: pop .7s cubic-bezier(.2,.9,.3,1.3) both .15s; }
+  @keyframes pop { from { transform: scale(.6) rotate(-4deg); opacity: .2; } to { transform: none; opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) { .reveal.anim .recipient { animation: none; } }
+
+  footer { font-size: .8rem; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<main class="page">
+  <header>
+    <p class="sub">Weihnachtswichteln 2026</p>
+    <h1 class="brand">SO<span>N</span>S</h1>
+  </header>
+
+  <section class="tag-wrap" aria-live="polite">
+    <!-- Name check -->
+    <div class="tag" id="step-name" hidden>
+      <p class="eyebrow">Dein persönlicher Link</p>
+      <h2>Wer bist du? Gib deinen Namen ein, dann siehst du, wen du beschenkst.</h2>
+      <form id="name-form" autocomplete="off">
+        <label for="name-input">Dein Name</label>
+        <input type="text" id="name-input" name="name" placeholder="z.&nbsp;B. Alex" autocapitalize="words" spellcheck="false" required>
+        <button type="submit" id="name-submit">Wichtel aufdecken</button>
+      </form>
+      <p class="error" id="name-error" hidden></p>
+      <div>
+        <p class="muted" style="font-size:.85rem;margin-bottom:.5rem">Dabei sind:</p>
+        <ul class="names" id="names"></ul>
+      </div>
+    </div>
+
+    <!-- Missing / invalid link -->
+    <div class="tag" id="step-code" hidden>
+      <p class="eyebrow" id="code-eyebrow">Kein Code gefunden</p>
+      <h2 id="code-title">Öffne die Seite über den Link, den du bekommen hast.</h2>
+      <p class="muted">Jeder Link enthält einen eigenen Code nach dem #-Zeichen. Wenn der Link abgeschnitten wurde, kannst du den Code auch hier eintragen.</p>
+      <form id="code-form" autocomplete="off">
+        <label for="code-input">Code aus deinem Link</label>
+        <input type="text" id="code-input" name="code" placeholder="16 Zeichen" spellcheck="false" autocapitalize="off" required>
+        <button type="submit">Weiter</button>
+      </form>
+    </div>
+
+    <!-- Reveal -->
+    <div class="tag reveal" id="step-reveal" hidden>
+      <p class="eyebrow">Hallo <span id="giver"></span>, du beschenkst</p>
+      <p class="recipient" id="recipient"></p>
+      <p class="muted">Psst. Das bleibt unter uns.</p>
+      <button type="button" class="linkish" id="hide-btn">Wieder verdecken</button>
+    </div>
+  </section>
+
+  <footer>Die Auslosung ist verschlüsselt in dieser Seite gespeichert. Mit deinem Link lässt sich nur dein eigener Wichtel aufdecken.</footer>
+</main>
+
+<script>
+const DATA = {"names":["Alex","Andi","Anton","Bene","Chris","Dani","Thommy"],"iter":150000,"entries":{"74892c69cf137f8d42778668f40079f2e067900b1167f85a04bf1e0efe93c8d6":{"s":"NVfKlfgp6zqkQPb5RqdXSQ==","i":"fQX2uopPfoifGTfb","c":"hmlNHtiq7ASjWD4hM8yjFkpLCKbqQlqDmVobSTnHrwSOWPw37feRrjsXwg=="},"b38309e0a10e3bb5bef671b81dbf7351ca0643065e60d2d89556a1751b4cb342":{"s":"uYUe0mMvOy2FReLdkLP+QQ==","i":"Q0FIaHEq4K7P/btO","c":"WU8etrYamBJTNUDJ41RkOobOysFzj9oeYG2RPPlMnrWw/QpSrdzj5zL4gVhF"},"507a6063bf2d0188230298d1a215938040137ab3c53bddd221b59ad50a34d003":{"s":"PPIYW+zg0MplpM5sir0lbg==","i":"+1HMJfcA/mwr06/K","c":"JFXc9cPZXMkj8RRScT5XkMblOENasLkrkArnFC/j0W15dS3okQ7IguNVFxbD"},"9b1a03d6c5e490bc3d1900f18fa5deeae9b74c6a695419ee7a671b5ba5cd96ed":{"s":"Xc5dR/isog9rjfduz/swdw==","i":"EjuLzLkUfwm3Zv5T","c":"yUnNcLI9dgdNjLPP/bCPlRY7sih3GxDWyl0Ax9xWsd0lligPT5RHzQeWSQ=="},"e5c55b4fc3cee1355c752f42d1b96bee105f912092d0b16fa19d74ea8ace477d":{"s":"pKvqYcXSSl2EfWmqVnR00w==","i":"tES8VDu91yflIQWQ","c":"uReGpBECK2RZlgNZlsl83IMHuYJzIA7/cTg27++cpEWCQzxVQDVruldtn6Q="},"bfcd3af49c60efdcc7a3b426f806dcdae29f591e743908203beeeb78aa891349":{"s":"xhr0GwWuWBXthIoq7QO5wQ==","i":"+bfDLCJsrew7uYIu","c":"uAvxfn7XgI9gW26/hnGH67jVaNTRmHN74lLI4WwSAIE+w+skwPPtsUN57g=="},"df538e48b2ef5c9d9a3ab0b460632fa139ec8b13b89acf7e8625e04566bbd660":{"s":"VR9nQ6hQv76XvqFQd3Lx9g==","i":"8wbktBvfdXoZPAsC","c":"Y7fLApmt05fvXXrgD3nvF2nJJ7FG9YshOyp9sathTp9T+m1zKRzLWriegzhc/Q=="}}};
+
+const $ = (id) => document.getElementById(id);
+const enc = new TextEncoder();
+const b64 = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
+const norm = (s) => s.normalize("NFC").trim().toLowerCase().replace(/\s+/g, " ");
+
+let token = "";
+
+async function sha256hex(str) {
+  const buf = await crypto.subtle.digest("SHA-256", enc.encode(str));
+  return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+
+async function entryFor(tok) {
+  if (!tok) return null;
+  return DATA.entries[await sha256hex("sons-id:" + tok)] || null;
+}
+
+function show(id) {
+  for (const s of ["step-name", "step-code", "step-reveal"]) $(s).hidden = s !== id;
+}
+
+async function route() {
+  token = decodeURIComponent(location.hash.replace(/^#/, "")).trim();
+  if (!token) {
+    $("code-eyebrow").textContent = "Kein Code gefunden";
+    $("code-title").textContent = "Öffne die Seite über den Link, den du bekommen hast.";
+    return show("step-code");
+  }
+  if (!(await entryFor(token))) {
+    $("code-eyebrow").textContent = "Unbekannter Code";
+    $("code-title").textContent = "Dieser Link gehört zu keinem Wichtel. Prüfe, ob er vollständig kopiert wurde.";
+    return show("step-code");
+  }
+  $("name-error").hidden = true;
+  show("step-name");
+}
+
+async function reveal(name) {
+  const e = await entryFor(token);
+  const base = await crypto.subtle.importKey("raw", enc.encode(token + "|" + norm(name)), "PBKDF2", false, ["deriveKey"]);
+  const key = await crypto.subtle.deriveKey(
+    { name: "PBKDF2", salt: b64(e.s), iterations: DATA.iter, hash: "SHA-256" },
+    base, { name: "AES-GCM", length: 256 }, false, ["decrypt"]
+  );
+  const pt = await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64(e.i) }, key, b64(e.c));
+  return JSON.parse(new TextDecoder().decode(pt));
+}
+
+$("names").innerHTML = DATA.names.map((n) => `<li>${n}</li>`).join("");
+
+$("name-form").addEventListener("submit", async (ev) => {
+  ev.preventDefault();
+  const name = $("name-input").value;
+  const btn = $("name-submit");
+  btn.disabled = true;
+  $("name-error").hidden = true;
+  try {
+    const r = await reveal(name);
+    $("giver").textContent = r.from;
+    $("recipient").textContent = r.to;
+    show("step-reveal");
+    const card = $("step-reveal");
+    card.classList.remove("anim"); void card.offsetWidth; card.classList.add("anim");
+  } catch {
+    $("name-error").textContent = "Dieser Name passt nicht zu deinem Link. Du kannst nur deinen eigenen Namen aufdecken. Achte auf die Schreibweise.";
+    $("name-error").hidden = false;
+  } finally {
+    btn.disabled = false;
+  }
+});
+
+$("code-form").addEventListener("submit", (ev) => {
+  ev.preventDefault();
+  const c = $("code-input").value.trim().replace(/^.*#/, "");
+  if (c) location.hash = c;
+});
+
+$("hide-btn").addEventListener("click", () => {
+  $("recipient").textContent = "";
+  $("name-input").value = "";
+  show("step-name");
+});
+
+window.addEventListener("hashchange", route);
+route();
+</script>
+</body>
+</html>
